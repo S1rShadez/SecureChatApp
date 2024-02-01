@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static SecureChatApp.Logic.CheckLogin;
 
 namespace SecureLoginApp
 {
@@ -25,11 +26,21 @@ namespace SecureLoginApp
             InitializeComponent();
         }
 
+        //Log in button
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.Content = new Dashboard();
+            //Console.WriteLine(encrypted);
+            if (CLogin(UNtxt.Text, PWtxt.Password))
+            {
+                this.Content = new Dashboard();
+            }
+            else
+            {
+                BadInput.Visibility = Visibility.Visible;
+            }
         }
 
+        //Createuser button
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             this.Content = new RegisterUser();
