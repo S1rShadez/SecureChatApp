@@ -5,8 +5,47 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SecureLoginApp"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="Blue">
-    <Grid>
-            
+             d:DesignHeight="450" d:DesignWidth="800" Background="Gray">
+    <Grid ShowGridLines="False">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Content="Account name" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="AccName" Grid.Column="3"/>
+        <Button Content="Sign out" HorizontalAlignment="Left" Margin="722,22,0,0" VerticalAlignment="Top" Width="50"/>
+        <Grid Grid.Row="1" Grid.Column="2" Grid.RowSpan="4" Grid.ColumnSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="chatInput" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="5" TextWrapping="Wrap" Grid.RowSpan="3" Background="#FF969494" TextAlignment="Center" AcceptsReturn="True" AcceptsTab="True"/>
+        </Grid>
+        <Grid Grid.RowSpan="5" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <ListBox x:Name="contactsLists" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.Column="0" Grid.Row="0" Background="#19000000" Grid.ColumnSpan="3"/>
+        
+        </Grid>
     </Grid>
 </UserControl>
