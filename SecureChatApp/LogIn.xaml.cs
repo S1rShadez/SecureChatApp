@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static SecureChatApp.Logic.CheckLogin;
+using static SecureChatApp.Logic.Encryption;
 
 namespace SecureLoginApp
 {
@@ -32,6 +33,8 @@ namespace SecureLoginApp
             //Console.WriteLine(encrypted);
             if (CLogin(UNtxt.Text, PWtxt.Password))
             {
+                EncryptFile("abc123");
+                DecryptFile("abc123", "EncryptedData.txt");
                 this.Content = new Dashboard();
             }
             else
