@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Management" Version="8.0.0" />
+    <PackageReference Include="System.Security.Cryptography.OpenSsl" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>

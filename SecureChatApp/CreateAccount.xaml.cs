@@ -27,6 +27,7 @@ namespace SecureLoginApp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            //TODO: Implement a proper account creation system
             this.Content = new LogIn();
         }
     }

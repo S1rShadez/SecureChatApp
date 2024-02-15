@@ -46,6 +46,7 @@ namespace SecureChatApp.Logic
         static string mbID = GetMotherboardInfo();
         static string cmID = GetCacheMemoryInfo();
 
+        //TODO: Change the file encryption to OpenSSL
         public static void EncryptFile(string input)
         {
             

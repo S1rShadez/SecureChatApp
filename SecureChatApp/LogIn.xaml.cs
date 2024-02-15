@@ -30,7 +30,7 @@ namespace SecureLoginApp
         //Log in button
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //Console.WriteLine(encrypted);
+            //TODO: Create a proper login
             if (CLogin(UNtxt.Text, PWtxt.Password))
             {
                 EncryptFile("abc123");
