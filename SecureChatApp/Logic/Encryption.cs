@@ -55,8 +55,6 @@ namespace SecureChatApp.Logic
 
             using (Aes aes = Aes.Create())
             {
-                // Set the key (replace with your own key).
-
                 aes.Key = hashedHID;
                 aes.GenerateIV();
                 aes.Padding = PaddingMode.PKCS7;
