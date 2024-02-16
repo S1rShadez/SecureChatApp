@@ -20,6 +20,7 @@ namespace SecureLoginApp
     /// </summary>
     public partial class RegisterUser : UserControl
     {
+        //TODO: Create proper user account creation 
         public RegisterUser()
         {
             InitializeComponent();

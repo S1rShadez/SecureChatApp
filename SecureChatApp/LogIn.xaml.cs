@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static SecureChatApp.Logic.CheckLogin;
+using static SecureChatApp.Logic.User;
 using static SecureChatApp.Logic.Encryption;
 
 namespace SecureLoginApp
@@ -22,6 +22,7 @@ namespace SecureLoginApp
     /// </summary>
     public partial class LogIn : UserControl
     {
+        //TODO: Create a proper login test
         public LogIn()
         {
             InitializeComponent();
@@ -31,10 +32,10 @@ namespace SecureLoginApp
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             //Console.WriteLine(encrypted);
-            if (CLogin(UNtxt.Text, PWtxt.Password))
+            if (CheckLogin(UNtxt.Text, PWtxt.Password))
             {
-                EncryptFile("abc123");
-                DecryptFile("abc123", "EncryptedData.txt");
+                //EncryptFile("testing tekst", "abc123");
+                //DecryptFile("abc123");
                 this.Content = new Dashboard();
             }
             else

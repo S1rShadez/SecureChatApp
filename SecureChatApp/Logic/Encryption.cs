@@ -12,6 +12,10 @@ namespace SecureChatApp.Logic
 {
     public static class Encryption
     {
+        /// <summary>
+        /// Hashes a string using SHA512
+        /// </summary>
+        /// <returns>string</returns>
         public static string Encrypt512(string phrase)
         {
 
@@ -22,7 +26,10 @@ namespace SecureChatApp.Logic
             return hashedPwd;
         }
 
-        //AES key creator
+        /// <summary>
+        /// Creates a byte array after hashing a string using SHA256 used as an aes key by 
+        /// </summary>
+        /// <returns>byte[]</returns>
         public static byte[] CreateAESKey256(string phrase)
         {
 
@@ -32,6 +39,10 @@ namespace SecureChatApp.Logic
             return hashedDataBytes;
         }
 
+        /// <summary>
+        /// Turns a byte array into a usable string
+        /// </summary>
+        /// <returns>string</returns>
         private static string byteArrayToString(byte[] inputArray)
         {
             StringBuilder output = new StringBuilder("");
@@ -46,24 +57,28 @@ namespace SecureChatApp.Logic
         static string mbID = GetMotherboardInfo();
         static string cmID = GetCacheMemoryInfo();
 
-        public static void EncryptFile(string input)
+        //TODO: Upgrade the encryption to include salt and perhaps more
+
+        /// <summary>
+        /// Encrypts a text input using the password input
+        /// </summary>
+        /// <returns></returns>
+        public static void EncryptFile(string input, string password)
         {
-            
-            string hwFingerprint = $"{cpuID}-{mbID}-{cmID}-{Encrypt512(input)}";
+
+            string hwFingerprint = $"{cpuID}-{mbID}-{cmID}-{Encrypt512(password)}";
 
             byte[] hashedHID = CreateAESKey256(hwFingerprint);
 
             using (Aes aes = Aes.Create())
             {
-                // Set the key (replace with your own key).
-
                 aes.Key = hashedHID;
                 aes.GenerateIV();
                 aes.Padding = PaddingMode.PKCS7;
 
                 // Get the initialization vector (IV) and write it to the file.
                 byte[] iv = aes.IV;
-                using (FileStream fileStream = new FileStream("D:\\VisualStudio\\Repos\\SecureChatApp\\SecureChatApp\\bin\\Debug\\net8.0-windows\\EncryptedData.txt", FileMode.Create))
+                using (FileStream fileStream = new FileStream("ImportantData.txt", FileMode.Create))
                 {
                     fileStream.Write(iv, 0, iv.Length);
                 }
@@ -76,21 +91,25 @@ namespace SecureChatApp.Logic
                     {
                         using (StreamWriter writer = new StreamWriter(cryptoStream))
                         {
-                            string padding = "1234567890123456";
-                            writer.Write(padding + "This isto see howand if it worksproperly123");
+                            string padding = "1234567890123456"; //This was necessary so that no data was lost
+                            writer.Write(padding + input);
                         }
                     }
                     byte[] encryptedData = memoryStream.ToArray();
 
                     // Save the encrypted data to a file.
-                    File.WriteAllBytes("EncryptedData.txt", encryptedData);
+                    File.WriteAllBytes("ImportantData.txt", encryptedData);
                 }
             }
         }
 
-        public static void DecryptFile(string input, string filePath)
+        /// <summary>
+        /// Decrypts a file using the password input
+        /// </summary>
+        /// <returns></returns>
+        public static string DecryptFile(string password)
         {
-            string hwFingerprint = $"{cpuID}-{mbID}-{cmID}-{Encrypt512(input)}";
+            string hwFingerprint = $"{cpuID}-{mbID}-{cmID}-{Encrypt512(password)}";
 
             byte[] hashedHID = CreateAESKey256(hwFingerprint);
 
@@ -98,7 +117,7 @@ namespace SecureChatApp.Logic
             byte[] encryptedData;
 
             // Read the initialization vector (IV) and the encrypted data from the file
-            using (FileStream fileStream = new FileStream(filePath, FileMode.Open))
+            using (FileStream fileStream = new FileStream("ImportantData.txt", FileMode.Open))
             {
                 fileStream.Read(iv, 0, iv.Length);
 
@@ -126,7 +145,8 @@ namespace SecureChatApp.Logic
                         byte[] decryptedBytes = decryptedStream.ToArray();
 
                         string decryptedText = Encoding.UTF8.GetString(decryptedBytes);
-                        File.WriteAllText("DecryptedData.txt", decryptedText);
+                        //File.WriteAllText("ImportantData.txt", decryptedText);
+                        return decryptedText;
                     }
                 }
             }
@@ -134,7 +154,14 @@ namespace SecureChatApp.Logic
             {
                 Debug.WriteLine($"Decryption error: {ex.Message}");
             }
+
+            return "Unable to decrypt data, did you enter the correct username/password?";
         }
+
+        /// <summary>
+        /// Gets ProcessorID, Manufacturer and Number of logical processors and concats them into a single string
+        /// </summary>
+        /// <returns>string</returns>
         static string GetCpuId()
         {
             using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_Processor"))
@@ -147,6 +174,10 @@ namespace SecureChatApp.Logic
             return string.Empty;
         }
 
+        /// <summary>
+        /// Gets Serialnumber and Manufacturer of the motherboard and concats them into a single string
+        /// </summary>
+        /// <returns>string</returns>
         static string GetMotherboardInfo()
         {
             using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_BaseBoard"))
@@ -158,6 +189,11 @@ namespace SecureChatApp.Logic
             }
             return string.Empty;
         }
+
+        /// <summary>
+        /// Gets Name, Manufacturer and Serialnumber of the RAM and concats them into a single string
+        /// </summary>
+        /// <returns>string</returns>
         static string GetCacheMemoryInfo()
         {
             using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PhysicalMemory"))
