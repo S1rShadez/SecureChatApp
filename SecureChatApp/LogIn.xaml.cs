@@ -33,7 +33,7 @@ namespace SecureLoginApp
             //TODO: Create a proper login
             if (CLogin(UNtxt.Text, PWtxt.Password))
             {
-                EncryptFile("abc123");
+                EncryptFile("Testing","abc123");
                 DecryptFile("abc123", "EncryptedData.txt");
                 this.Content = new Dashboard();
             }

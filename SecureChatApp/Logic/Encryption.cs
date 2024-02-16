@@ -47,10 +47,10 @@ namespace SecureChatApp.Logic
         static string cmID = GetCacheMemoryInfo();
 
         //TODO: Change the file encryption to OpenSSL
-        public static void EncryptFile(string input)
+        public static void EncryptFile(string input, string password)
         {
             
-            string hwFingerprint = $"{cpuID}-{mbID}-{cmID}-{Encrypt512(input)}";
+            string hwFingerprint = $"{cpuID}-{mbID}-{cmID}-{Encrypt512(password)}";
 
             byte[] hashedHID = CreateAESKey256(hwFingerprint);
 
@@ -87,9 +87,9 @@ namespace SecureChatApp.Logic
             }
         }
 
-        public static void DecryptFile(string input, string filePath)
+        public static void DecryptFile(string password, string filePath)
         {
-            string hwFingerprint = $"{cpuID}-{mbID}-{cmID}-{Encrypt512(input)}";
+            string hwFingerprint = $"{cpuID}-{mbID}-{cmID}-{Encrypt512(password)}";
 
             byte[] hashedHID = CreateAESKey256(hwFingerprint);
 
@@ -134,6 +134,11 @@ namespace SecureChatApp.Logic
                 Debug.WriteLine($"Decryption error: {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Gets ProcessorID, Manufacturer and Number of logical processors and concats them into a single string
+        /// </summary>
+        /// <returns>string</returns>
         static string GetCpuId()
         {
             using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_Processor"))
@@ -146,6 +151,10 @@ namespace SecureChatApp.Logic
             return string.Empty;
         }
 
+        /// <summary>
+        /// Gets Serialnumber and Manufacturer of the motherboard and concats them into a single string
+        /// </summary>
+        /// <returns>string</returns>
         static string GetMotherboardInfo()
         {
             using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_BaseBoard"))
@@ -157,6 +166,11 @@ namespace SecureChatApp.Logic
             }
             return string.Empty;
         }
+
+        /// <summary>
+        /// Gets Name, Manufacturer and Serialnumber of the RAM and concats them into a single string
+        /// </summary>
+        /// <returns>string</returns>
         static string GetCacheMemoryInfo()
         {
             using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_PhysicalMemory"))
