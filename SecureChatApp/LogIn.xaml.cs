@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using static SecureChatApp.Logic.User;
 using static SecureChatApp.Logic.Encryption;
+using SecureChatApp.Logic;
 
 namespace SecureChatApp
 {
@@ -36,7 +37,7 @@ namespace SecureChatApp
             {
                 //EncryptFile("testing tekst", "abc123");
                 //DecryptFile("abc123");
-                this.Content = new Dashboard();
+                this.Content = new Dashboard(new User(UNtxt.Text));
             }
             else
             {

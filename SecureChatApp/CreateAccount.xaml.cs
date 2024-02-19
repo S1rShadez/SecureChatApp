@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using SecureChatApp.Logic;
+using static SecureChatApp.Logic.User;
 
 namespace SecureChatApp
 {
@@ -29,7 +29,15 @@ namespace SecureChatApp
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.Content = new LogIn();
+            if (RPWtxt.Password == RPW2txt.Password && !string.IsNullOrEmpty(RPWtxt.Password) && !string.IsNullOrEmpty(RUNtxt.Text))
+            {
+                var user = CreateUser(RUNtxt.Text, RPWtxt.Password);
+                this.Content = new Dashboard(user);
+            }
+            else
+            {
+                badInputPSW.Visibility = Visibility.Visible;
+            }
         }
     }
 }

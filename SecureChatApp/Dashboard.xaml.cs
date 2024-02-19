@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SecureChatApp.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,16 @@ namespace SecureChatApp
     /// </summary>
     public partial class Dashboard : UserControl
     {
+        User currentUser { get; set; }
         public Dashboard()
         {
             InitializeComponent();
+        }
+        public Dashboard(User user)
+        {
+            currentUser = user;
+            InitializeComponent();
+            AccName.Content = currentUser.username;
         }
     }
 }
