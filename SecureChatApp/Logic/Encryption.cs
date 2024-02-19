@@ -158,6 +158,10 @@ namespace SecureChatApp.Logic
             return "Unable to decrypt data, did you enter the correct username/password?";
         }
 
+        /// <summary>
+        /// Decrypts a file using the password input to verify if the user successfully signed in
+        /// </summary>
+        /// <returns>bool</returns>
         public static bool VerifyAccount(string password)
         {
             string hwFingerprint = $"{cpuID}-{mbID}-{cmID}-{Encrypt512(password)}";
