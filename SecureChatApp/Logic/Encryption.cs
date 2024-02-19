@@ -158,6 +158,52 @@ namespace SecureChatApp.Logic
             return "Unable to decrypt data, did you enter the correct username/password?";
         }
 
+        public static bool VerifyAccount(string password)
+        {
+            string hwFingerprint = $"{cpuID}-{mbID}-{cmID}-{Encrypt512(password)}";
+
+            byte[] hashedHID = CreateAESKey256(hwFingerprint);
+
+            byte[] iv = new byte[16]; // IV size for AES is 16 bytes
+            byte[] encryptedData;
+
+            // Read the initialization vector (IV) and the encrypted data from the file
+            using (FileStream fileStream = new FileStream("ImportantData.txt", FileMode.Open))
+            {
+                fileStream.Read(iv, 0, iv.Length);
+
+                encryptedData = new byte[fileStream.Length - iv.Length];
+                fileStream.Read(encryptedData, 0, encryptedData.Length);
+            }
+
+            try
+            {
+                using (Aes aes = Aes.Create())
+                {
+                    aes.Key = hashedHID;
+                    aes.IV = iv;
+                    aes.Padding = PaddingMode.PKCS7; // Set the same padding mode used during encryption
+
+                    ICryptoTransform decryptor = aes.CreateDecryptor();
+
+                    using (MemoryStream decryptedStream = new MemoryStream())
+                    {
+                        using (CryptoStream cryptoStream = new CryptoStream(decryptedStream, decryptor, CryptoStreamMode.Write))
+                        {
+                            cryptoStream.Write(encryptedData, 0, encryptedData.Length);
+                        }
+                        return true;
+                    }
+                }
+            }
+            catch (CryptographicException ex)
+            {
+                Debug.WriteLine($"Decryption error: {ex.Message}");
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Gets ProcessorID, Manufacturer and Number of logical processors and concats them into a single string
         /// </summary>
