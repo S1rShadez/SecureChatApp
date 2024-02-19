@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using static SecureChatApp.Logic.User;
 using static SecureChatApp.Logic.Encryption;
 
-namespace SecureLoginApp
+namespace SecureChatApp
 {
     /// <summary>
     /// Interaction logic for LogIn.xaml

@@ -23,9 +23,12 @@ namespace SecureChatApp.Logic
         /// Creates the user and the encrypted file that stores user data
         /// </summary>
         /// <returns></returns>
-        public static void CreateUser(string username, string password)
+        public static User CreateUser(string username, string password)
         {
+            if(string.IsNullOrEmpty(username)) throw new ArgumentNullException("username");
+            if(string.IsNullOrEmpty(password)) throw new ArgumentNullException("password");
             EncryptFile(username, password);
+            return new User(username);
         }
 
         /// <summary>
