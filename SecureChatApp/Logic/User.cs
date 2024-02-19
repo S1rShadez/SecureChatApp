@@ -7,9 +7,9 @@ using static SecureChatApp.Logic.Encryption;
 
 namespace SecureChatApp.Logic
 {
-    internal class User
+    public class User
     {
-        string username;
+        public string username;
         List<Contacts> contacts;
 
         public User(string username)
@@ -25,8 +25,6 @@ namespace SecureChatApp.Logic
         /// <returns></returns>
         public static User CreateUser(string username, string password)
         {
-            if(string.IsNullOrEmpty(username)) throw new ArgumentNullException("username");
-            if(string.IsNullOrEmpty(password)) throw new ArgumentNullException("password");
             EncryptFile(username, password);
             return new User(username);
         }
@@ -37,11 +35,10 @@ namespace SecureChatApp.Logic
         /// <returns></returns>
         public static bool CheckLogin(string UName, string PWord)
         {
-            if (string.IsNullOrEmpty(UName) || string.IsNullOrEmpty(PWord)) { return false; }
-            //TODO: change this check to if encrypted file was successfully decrypted with the right password, or not (also with the correct username),
+            //TODO: change this check to if encrypted file was successfully decrypted with the right password
             if (!string.IsNullOrEmpty(UName) || !string.IsNullOrEmpty(PWord))
             {
-                return true;
+                return VerifyAccount(PWord);
             }
             return false;
         }
