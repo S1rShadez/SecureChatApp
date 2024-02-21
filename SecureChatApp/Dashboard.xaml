@@ -45,7 +45,14 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <ListBox x:Name="contactsLists" d:ItemsSource="{d:SampleData ItemCount=5}" Grid.Column="0" Grid.Row="0" Background="#19000000" Grid.ColumnSpan="3"/>
-        
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="4" Grid.RowSpan="5" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
         </Grid>
     </Grid>
 </UserControl>

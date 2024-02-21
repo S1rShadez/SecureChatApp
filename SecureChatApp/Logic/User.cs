@@ -9,13 +9,13 @@ namespace SecureChatApp.Logic
 {
     public class User
     {
-        public string username;
-        List<Contacts> contacts;
+        public string _username;
+        List<Contacts> _contacts;
 
-        public User(string username)
+        private User(string username)
         {
-            this.username = username;
-            contacts = new List<Contacts>();
+            _username = username;
+            _contacts = new List<Contacts>();
         }
 
         //TODO: Update the CreateUser method
@@ -35,7 +35,6 @@ namespace SecureChatApp.Logic
         /// <returns></returns>
         public static bool CheckLogin(string UName, string PWord)
         {
-            //TODO: change this check to if encrypted file was successfully decrypted with the right password
             if (!string.IsNullOrEmpty(UName) || !string.IsNullOrEmpty(PWord))
             {
                 return VerifyAccount(PWord);
@@ -44,9 +43,9 @@ namespace SecureChatApp.Logic
         }
 
         //TODO: Create a method that turns the user data into json data to store in the encrypted file
-        private string UserSummary()
-        {
-            return null;
-        }
+        
+        //TODO: create a method that outputs the contacts list into the GUI
+
+        //TODO: Create a method that outputs the messages with the selected contact
     }
 }
