@@ -30,7 +30,7 @@ namespace SecureChatApp
         {
             currentUser = user;
             InitializeComponent();
-            AccName.Content = currentUser.username;
+            AccName.Content = currentUser._username;
         }
     }
 }

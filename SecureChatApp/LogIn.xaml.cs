@@ -37,7 +37,7 @@ namespace SecureChatApp
             {
                 //EncryptFile("testing tekst", "abc123");
                 //DecryptFile("abc123");
-                this.Content = new Dashboard(new User(UNtxt.Text));
+                this.Content = new Dashboard(CreateUser(UNtxt.Text, PWtxt.Password));
             }
             else
             {
