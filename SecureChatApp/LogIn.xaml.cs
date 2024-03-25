@@ -24,6 +24,7 @@ namespace SecureChatApp
     public partial class LogIn : UserControl
     {
         //TODO: Create a proper login test
+        //TODO: Create a separate login that reads an existing user file
         public LogIn()
         {
             InitializeComponent();
